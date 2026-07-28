@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Database
+*.db
+*.db-wal
+*.db-shm
+
+# ML artifacts are committed intentionally (see README) EXCEPT bulky training data
+backend/app/ml/data/*.parquet
+backend/app/ml/data/*.csv
+
+# Node
+node_modules/
+frontend/dist/
+.vite/
+
+# Env
+.env
+.env.local
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Claude Code IDE config (contains machine-specific absolute paths)
+.claude/
