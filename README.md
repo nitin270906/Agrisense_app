@@ -1,4 +1,4 @@
-# SaltWatch — AI Salinity & Crop Stress Forecaster
+# Agrisense— AI Salinity & Crop Stress Forecaster
 
 Forecasts **soil salinity**, **crop water stress**, **irrigation need** and **crop health**
 for individual farm plots, and turns each forecast into an action a farmer can take
