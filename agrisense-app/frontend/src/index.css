@@ -1,0 +1,384 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap');
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   Design tokens — Warm "Khet" palette.
+
+   Default: light (cream / warm white / gold accent). Dark mode is opt-in via
+   [data-theme="dark"] on <html>.
+
+   Gold accent (#D4AF37 decorative, #B5881E text) evokes wheat and harvest.
+   Status colours (good/warning/serious/critical) are reserved for risk states
+   and never reused for decorative purposes.
+--------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+
+  /* Surfaces — warm cream hierarchy */
+  --surface-0: #F7F5F0;   /* page background */
+  --surface-1: #FFFFFF;   /* card / panel */
+  --surface-2: #FAF8F4;   /* inner element */
+  --surface-3: #F2EEE4;   /* hover / selected */
+
+  /* Ink — warm blacks */
+  --text-primary:   #1A1814;
+  --text-secondary: #534E3D;
+  --text-muted:     #8A8373;
+
+  /* Borders — barely-there on cream */
+  --border:       rgba(26, 24, 20, 0.07);
+  --border-strong: rgba(26, 24, 20, 0.14);
+  --grid:         #E8E4DA;
+
+  /* Gold accent — #B5881E passes WCAG AA (4.6:1) on white */
+  --accent:      #B5881E;
+  --accent-fill: #D4AF37;   /* decorative fills */
+  --accent-soft: #FDF6E3;   /* tinted panel backgrounds */
+  --accent-ink:  #FFFFFF;
+
+  /* Status — darkened to reach 4.5:1 contrast on white */
+  --status-good:     #196B3A;
+  --status-warning:  #9A6200;
+  --status-serious:  #B84A09;
+  --status-critical: #B81C1C;
+
+  /* Categorical chart series */
+  --series-1: #2969C4;
+  --series-2: #196B3A;
+  --series-3: #9A6200;
+  --series-4: #B84A09;
+
+  /* Elevation */
+  /* Glass surfaces for floating nav bars */
+  --surface-glass: rgba(255, 255, 255, 0.90);
+
+  --shadow-card:       0 1px 3px rgba(26,24,20,0.04), 0 2px 8px rgba(26,24,20,0.06);
+  --shadow-card-hover: 0 2px 8px rgba(26,24,20,0.07), 0 8px 24px rgba(26,24,20,0.10);
+  --shadow-float:      0 4px 16px rgba(26,24,20,0.10), 0 1px 4px rgba(26,24,20,0.06);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Warm charcoal — not cold blue-black */
+  --surface-0: #1A1814;
+  --surface-1: #221F18;
+  --surface-2: #2A261E;
+  --surface-3: #332E24;
+
+  --text-primary:   #F0EDE4;
+  --text-secondary: #A89F8C;
+  --text-muted:     #6E675A;
+
+  --border:        rgba(240, 237, 228, 0.08);
+  --border-strong: rgba(240, 237, 228, 0.16);
+  --grid:          #3A3529;
+
+  --accent:      #E2C256;
+  --accent-fill: #D4AF37;
+  --accent-soft: #282210;
+  --accent-ink:  #1A1814;
+
+  --status-good:     #37C26A;
+  --status-warning:  #F5AE2C;
+  --status-serious:  #F07833;
+  --status-critical: #F05050;
+
+  --series-1: #5B9FEE;
+  --series-2: #37C26A;
+  --series-3: #F5AE2C;
+  --series-4: #F07833;
+
+  --surface-glass: rgba(26, 24, 20, 0.88);
+
+  --shadow-card:       0 1px 3px rgba(0,0,0,0.20), 0 2px 8px rgba(0,0,0,0.25);
+  --shadow-card-hover: 0 2px 8px rgba(0,0,0,0.28), 0 8px 24px rgba(0,0,0,0.32);
+  --shadow-float:      0 4px 16px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.20);
+}
+
+/* Map tokens onto Tailwind colour utilities */
+@theme inline {
+  --color-surface-0:    var(--surface-0);
+  --color-surface-1:    var(--surface-1);
+  --color-surface-2:    var(--surface-2);
+  --color-surface-3:    var(--surface-3);
+
+  --color-ink:          var(--text-primary);
+  --color-ink-soft:     var(--text-secondary);
+  --color-ink-muted:    var(--text-muted);
+
+  --color-edge:         var(--border);
+  --color-edge-strong:  var(--border-strong);
+
+  --color-accent:       var(--accent);
+  --color-accent-ink:   var(--accent-ink);
+
+  --color-good:         var(--status-good);
+  --color-warning:      var(--status-warning);
+  --color-serious:      var(--status-serious);
+  --color-critical:     var(--status-critical);
+
+  --color-series-1:     var(--series-1);
+  --color-series-2:     var(--series-2);
+  --color-series-3:     var(--series-3);
+  --color-series-4:     var(--series-4);
+
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--surface-0);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'cv01', 'cv02', 'cv03', 'cv04', 'ss01';
+}
+
+/* Tighten headings globally — Inter benefits from negative tracking */
+h1, h2, h3 { letter-spacing: -0.02em; }
+h4, h5 { letter-spacing: -0.01em; }
+
+/* --- numeric columns ---------------------------------------------------- */
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* --- entrance animation ------------------------------------------------- */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+.rise-in { animation: riseIn 0.46s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* --- skeleton shimmer --------------------------------------------------- */
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-3);
+  border-radius: 8px;
+}
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 1.6s infinite;
+}
+:root[data-theme='dark'] .skeleton::after {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+}
+
+/* --- reduced motion ----------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --- loading states ------------------------------------------------------ */
+.loading-skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 25%, var(--surface-3) 50%, var(--surface-2) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* --- 3D card effects ------------------------------------------------------ */
+.card-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-3d:hover {
+  transform: translateY(-8px) rotateX(2deg) rotateY(2deg);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* --- glassmorphism effects ------------------------------------------------ */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+:root[data-theme='dark'] .glass {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* --- gradient backgrounds ------------------------------------------------- */
+.gradient-bg {
+  background: linear-gradient(135deg, var(--surface-0) 0%, var(--surface-2) 100%);
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, var(--accent-soft) 0%, var(--surface-0) 100%);
+}
+
+/* --- floating animation --------------------------------------------------- */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* --- pulse glow effect ---------------------------------------------------- */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px var(--accent); }
+  50% { box-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent); }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* --- enhanced button effects ---------------------------------------------- */
+.btn-3d {
+  transform: translateY(0);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.btn-3d:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-3d:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* --- particle effect background ------------------------------------------- */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: particle-float 15s infinite linear;
+}
+
+@keyframes floatParticle {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-25px) translateX(15px);
+  }
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* --- shimmer effect for cards --------------------------------------------- */
+.shimmer-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.shimmer-effect:hover::before {
+  left: 100%;
+}
+
+/* --- enhanced scrollbar --------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-fill) 100%);
+  border-radius: 10px;
+  border: 2px solid var(--surface-2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--accent-fill) 0%, var(--accent) 100%);
+}
+
+/* --- scrollbars --------------------------------------------------------- */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 8px;
+  border: 2px solid var(--surface-0);
+}
+
+/* Recharts focus ring suppression */
+.recharts-wrapper:focus,
+.recharts-surface:focus { outline: none; }

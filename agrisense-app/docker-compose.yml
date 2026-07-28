@@ -1,0 +1,35 @@
+# Two-stage local deployment:
+#   1. `frontend-build` compiles the SPA into a shared volume
+#   2. `api` serves that bundle alongside the API from a single origin
+#
+# One process, one URL, no CORS — the same arrangement used in production.
+
+services:
+  frontend-build:
+    image: node:20-alpine
+    working_dir: /src
+    volumes:
+      - ./frontend:/src
+      - frontend-dist:/src/dist
+    command: sh -c "npm ci && npm run build"
+
+  api:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: sqlite:////data/salinity.db
+      WEATHER_PROVIDER: open_meteo
+      WEATHER_CACHE_TTL_HOURS: "3"
+    volumes:
+      - api-data:/data
+      - frontend-dist:/app/../frontend/dist:ro
+    depends_on:
+      frontend-build:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+volumes:
+  api-data:
+  frontend-dist:

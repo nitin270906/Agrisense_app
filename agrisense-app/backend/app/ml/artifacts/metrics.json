@@ -1,0 +1,336 @@
+{
+  "model_version": "1.0.0",
+  "trained_at": "2026-07-27T14:55:34.728709+00:00",
+  "feature_columns": [
+    "soil_ec",
+    "soil_ec_delta_7d",
+    "soil_moisture_pct",
+    "soil_temp_c",
+    "ph",
+    "t_mean_1d",
+    "t_max_1d",
+    "t_mean_7d",
+    "t_max_7d",
+    "precip_1d",
+    "precip_7d",
+    "precip_30d",
+    "et0_1d",
+    "et0_7d",
+    "et0_30d",
+    "humidity_7d",
+    "wind_7d",
+    "water_balance_7d",
+    "water_balance_30d",
+    "aridity_index_7d",
+    "days_after_planting",
+    "season_progress",
+    "kc_current",
+    "crop_salt_threshold",
+    "crop_salt_slope",
+    "crop_root_depth",
+    "crop_depletion_p",
+    "soil_theta_fc",
+    "soil_theta_wp",
+    "soil_infiltration",
+    "soil_leach_efficiency",
+    "drainage_factor",
+    "irrigation_water_ec",
+    "water_table_depth_m",
+    "capillary_potential",
+    "salt_load_index",
+    "days_since_irrigation",
+    "irrigation_depth_30d",
+    "irrigation_events_30d",
+    "salt_applied_30d",
+    "leaching_balance_30d",
+    "lat",
+    "precip_next_7d",
+    "et0_next_7d",
+    "et0_next_14d",
+    "forecast_water_balance_7d"
+  ],
+  "targets": [
+    "target_salinity_delta_30d",
+    "target_water_stress",
+    "target_irrigation_mm",
+    "target_health"
+  ],
+  "n_rows": 52380,
+  "n_fields": 400,
+  "split": "GroupShuffleSplit by field_id (whole fields held out)",
+  "data_provenance": "Physics-simulated from FAO-56 water balance, Maas-Hoffman salt tolerance and a root-zone salt mass balance. Not field-measured.",
+  "metrics": {
+    "target_salinity_delta_30d": {
+      "overall": {
+        "r2": 0.2412,
+        "mae": 0.1639,
+        "rmse": 0.2819
+      },
+      "baseline": {
+        "r2": -0.1765,
+        "mae": 0.2251,
+        "rmse": 0.351
+      },
+      "best_iteration": 165,
+      "n_train": 41880,
+      "n_test": 10500,
+      "top_features": [
+        {
+          "feature": "soil_infiltration",
+          "importance": 0.1097
+        },
+        {
+          "feature": "irrigation_events_30d",
+          "importance": 0.0653
+        },
+        {
+          "feature": "drainage_factor",
+          "importance": 0.0561
+        },
+        {
+          "feature": "humidity_7d",
+          "importance": 0.0548
+        },
+        {
+          "feature": "irrigation_water_ec",
+          "importance": 0.0544
+        },
+        {
+          "feature": "capillary_potential",
+          "importance": 0.0469
+        },
+        {
+          "feature": "water_table_depth_m",
+          "importance": 0.0436
+        },
+        {
+          "feature": "soil_theta_fc",
+          "importance": 0.0406
+        },
+        {
+          "feature": "crop_depletion_p",
+          "importance": 0.0376
+        },
+        {
+          "feature": "soil_ec",
+          "importance": 0.0321
+        },
+        {
+          "feature": "lat",
+          "importance": 0.0297
+        },
+        {
+          "feature": "salt_load_index",
+          "importance": 0.0258
+        }
+      ]
+    },
+    "target_water_stress": {
+      "overall": {
+        "r2": 0.8485,
+        "mae": 0.0228,
+        "rmse": 0.0594
+      },
+      "baseline": {
+        "r2": -0.0114,
+        "mae": 0.0841,
+        "rmse": 0.1534
+      },
+      "best_iteration": 599,
+      "n_train": 41880,
+      "n_test": 10500,
+      "nonzero_tail": {
+        "r2": 0.7487,
+        "mae": 0.1171,
+        "rmse": 0.1541
+      },
+      "zero_share": 0.9018,
+      "top_features": [
+        {
+          "feature": "crop_root_depth",
+          "importance": 0.1572
+        },
+        {
+          "feature": "soil_moisture_pct",
+          "importance": 0.1148
+        },
+        {
+          "feature": "crop_depletion_p",
+          "importance": 0.1066
+        },
+        {
+          "feature": "soil_theta_wp",
+          "importance": 0.0906
+        },
+        {
+          "feature": "capillary_potential",
+          "importance": 0.0883
+        },
+        {
+          "feature": "soil_theta_fc",
+          "importance": 0.0545
+        },
+        {
+          "feature": "kc_current",
+          "importance": 0.0521
+        },
+        {
+          "feature": "leaching_balance_30d",
+          "importance": 0.0445
+        },
+        {
+          "feature": "water_table_depth_m",
+          "importance": 0.0444
+        },
+        {
+          "feature": "season_progress",
+          "importance": 0.0275
+        },
+        {
+          "feature": "irrigation_events_30d",
+          "importance": 0.026
+        },
+        {
+          "feature": "water_balance_30d",
+          "importance": 0.0248
+        }
+      ]
+    },
+    "target_irrigation_mm": {
+      "overall": {
+        "r2": 0.7274,
+        "mae": 9.4079,
+        "rmse": 18.6707
+      },
+      "baseline": {
+        "r2": -0.0131,
+        "mae": 25.3978,
+        "rmse": 35.9938
+      },
+      "best_iteration": 277,
+      "n_train": 41880,
+      "n_test": 10500,
+      "nonzero_tail": {
+        "r2": 0.5074,
+        "mae": 24.8111,
+        "rmse": 35.0698
+      },
+      "zero_share": 0.8084,
+      "top_features": [
+        {
+          "feature": "soil_infiltration",
+          "importance": 0.1411
+        },
+        {
+          "feature": "capillary_potential",
+          "importance": 0.0975
+        },
+        {
+          "feature": "soil_theta_fc",
+          "importance": 0.0945
+        },
+        {
+          "feature": "water_table_depth_m",
+          "importance": 0.0851
+        },
+        {
+          "feature": "soil_theta_wp",
+          "importance": 0.0624
+        },
+        {
+          "feature": "days_since_irrigation",
+          "importance": 0.0525
+        },
+        {
+          "feature": "irrigation_depth_30d",
+          "importance": 0.0477
+        },
+        {
+          "feature": "season_progress",
+          "importance": 0.0418
+        },
+        {
+          "feature": "water_balance_30d",
+          "importance": 0.0401
+        },
+        {
+          "feature": "leaching_balance_30d",
+          "importance": 0.0396
+        },
+        {
+          "feature": "soil_moisture_pct",
+          "importance": 0.031
+        },
+        {
+          "feature": "kc_current",
+          "importance": 0.0296
+        }
+      ]
+    },
+    "target_health": {
+      "overall": {
+        "r2": 0.8745,
+        "mae": 3.1523,
+        "rmse": 6.5974
+      },
+      "baseline": {
+        "r2": -0.021,
+        "mae": 13.398,
+        "rmse": 18.8193
+      },
+      "best_iteration": 342,
+      "n_train": 41880,
+      "n_test": 10500,
+      "top_features": [
+        {
+          "feature": "crop_salt_threshold",
+          "importance": 0.117
+        },
+        {
+          "feature": "soil_moisture_pct",
+          "importance": 0.0915
+        },
+        {
+          "feature": "soil_theta_wp",
+          "importance": 0.0805
+        },
+        {
+          "feature": "soil_infiltration",
+          "importance": 0.0757
+        },
+        {
+          "feature": "crop_salt_slope",
+          "importance": 0.0559
+        },
+        {
+          "feature": "capillary_potential",
+          "importance": 0.0541
+        },
+        {
+          "feature": "soil_ec",
+          "importance": 0.0536
+        },
+        {
+          "feature": "t_max_1d",
+          "importance": 0.0513
+        },
+        {
+          "feature": "soil_theta_fc",
+          "importance": 0.0415
+        },
+        {
+          "feature": "kc_current",
+          "importance": 0.0393
+        },
+        {
+          "feature": "crop_depletion_p",
+          "importance": 0.0355
+        },
+        {
+          "feature": "water_table_depth_m",
+          "importance": 0.03
+        }
+      ]
+    }
+  }
+}
